@@ -1,0 +1,27 @@
+{
+  "name": "healthymeal",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "start": "expo start",
+    "android": "expo start --android",
+    "ios": "expo start --ios",
+    "web": "expo start --web"
+  },
+  "dependencies": {
+    "@react-native-community/checkbox": "^0.5.17",
+    "expo": "~52.0.37",
+    "expo-checkbox": "~4.0.1",
+    "expo-status-bar": "~2.0.1",
+    "react": "18.3.1",
+    "react-native": "0.76.7",
+    "react-native-checkbox": "^2.0.0",
+    "react-native-vector-icons": "^10.2.0",
+    "tailwind-rn": "^4.2.0"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.20.0",
+    "@react-native-community/cli": "latest"
+  },
+  "private": true
+}
