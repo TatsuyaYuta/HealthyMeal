@@ -200,7 +200,7 @@ const styles = StyleSheet.create({
   comment: {
     fontSize: 14,
     color: 'gray',
-    fontStyle: 'italic',
+    fontStyle: 'Itim',
     marginTop: 5,
   },
   buttonContainer: {
