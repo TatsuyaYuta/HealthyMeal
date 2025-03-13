@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { ActivityIndicator, SafeAreaView} from 'react-native';
 import * as Font from 'expo-font'; // นำเข้า expo-font
-{/*import FormInput from "./components/FormInput";*/}
+import FormInput from "./components/FormInput";
 {/*import ProfileScreen from "./components/ProfileScreen";*/}
 {/*import ForgotPasswordScreen from "./components/ForgotPasswordScreen";*/}
 {/*import CreateNewPassword from './components/CreateNewPassword';*/}
-import VerifyEmail from './components/VerifyEmail';
+{/*import VerifyEmail from './components/VerifyEmail';*/}
 
 const loadFonts = async () => {
   await Font.loadAsync({
@@ -38,10 +38,10 @@ export default function App() {
 
   return (
     <SafeAreaView>
-        {/*<FormInput />*/}
+        <FormInput />
         {/*<ProfileScreen />*/}
         {/*<ForgotPasswordScreen/>*/}
-        <VerifyEmail/>
+        {/*<VerifyEmail/>*/}
         {/*<CreateNewPassword/>*/}
     </SafeAreaView>
   );

@@ -7,14 +7,14 @@ const FormInput = ({ navigation }) => {
     weight: '',
     height: '',
     gender: '',
-    dailyRoutine: '',
+    dailyRoutine: [],
+    otherCondition: '',
     diet: '',
     exercise: '',
     medication: '',
   });
 
   const handleInputChange = (field, value) => {
-    // กรอกเฉพาะตัวเลข อายุ, น้ำหนัก และส่วนสูง
     if (field === 'age' || field === 'weight' || field === 'height') {
       const numericValue = value.replace(/[^0-9]/g, '');
       setFormData({ ...formData, [field]: numericValue });
@@ -25,6 +25,20 @@ const FormInput = ({ navigation }) => {
 
   const handleGenderChange = (type) => {
     setFormData({ ...formData, gender: type });
+  };
+
+  const handleDailyRoutineChange = (condition) => {
+    setFormData((prev) => {
+      if (condition === 'อื่นๆ') {
+        return { ...prev, dailyRoutine: prev.dailyRoutine.filter(item => item !== 'อื่นๆ') };
+      }
+      const newRoutine = prev.dailyRoutine.includes(condition)
+        ? prev.dailyRoutine.filter((item) => item !== condition)
+        : prev.dailyRoutine.length < 3
+        ? [...prev.dailyRoutine, condition]
+        : prev.dailyRoutine;
+      return { ...prev, dailyRoutine: newRoutine };
+    });
   };
 
   const handleNext = () => {
@@ -38,13 +52,9 @@ const FormInput = ({ navigation }) => {
           <Text style={styles.header}>กรอกข้อมูล</Text>
 
           <View style={styles.rowContainer}>
-            {[
-              { key: 'age', label: 'Age', placeholder: 'อายุ' },
-              { key: 'weight', label: 'Weight', placeholder: 'น้ำหนัก' },
-              { key: 'height', label: 'Height', placeholder: 'ส่วนสูง' },
-            ].map(({ key, label, placeholder }) => (
+            {[{ key: 'age', label: 'Age', placeholder: 'อายุ' }, { key: 'weight', label: 'Weight', placeholder: 'น้ำหนัก' }, { key: 'height', label: 'Height', placeholder: 'ส่วนสูง' }].map(({ key, label, placeholder }) => (
               <View key={key} style={styles.smallInputContainer}>
-                <Text style={styles.label}>{label}</Text>
+                <Text style={styles.labelsmall}>{label}</Text>
                 <TextInput
                   placeholder={placeholder}
                   value={formData[key]}
@@ -56,22 +66,40 @@ const FormInput = ({ navigation }) => {
             ))}
           </View>
 
-          <Text style={styles.label}>Gender</Text>
-          <View style={styles.genderContainer}>
-            {['Male', 'Female', 'Other'].map((type) => (
-              <TouchableOpacity key={type} onPress={() => handleGenderChange(type.toLowerCase())} style={styles.genderOption}>
-                <View style={formData.gender === type.toLowerCase() ? styles.checkedBox : styles.uncheckedBox} />
-                <Text style={styles.genderText}>{type}</Text>
+            <View style={styles.genderContainer}>
+              <Text style={styles.label}>Gender</Text>
+                {['Male', 'Female', 'Other'].map((type) => (
+                  <TouchableOpacity
+                    key={type}
+                    onPress={() => handleGenderChange(type.toLowerCase())}
+                    style={styles.genderOption}
+                  >
+                    <View style={formData.gender === type.toLowerCase() ? styles.checkedBox : styles.uncheckedBox} />
+                    <Text style={styles.genderText}>{type}</Text>
+                  </TouchableOpacity>
+              ))}
+            </View>
+
+          <Text style={[styles.label, styles.labelLeft]}>โรคประจำตัว</Text>
+          <View style={styles.conditionContainer}>
+            {['โรคเบาหวาน', 'ความดันโลหิตสูง', 'โรคหัวใจ'].map((condition) => (
+              <TouchableOpacity
+                key={condition}
+                onPress={() => handleDailyRoutineChange(condition)}
+                style={[styles.conditionButton, formData.dailyRoutine.includes(condition) && styles.conditionButtonSelected]}
+              >
+                <Text style={styles.conditionText}>{condition}</Text>
               </TouchableOpacity>
             ))}
           </View>
+          <TextInput
+            placeholder="อื่นๆ"
+            value={formData.otherCondition}
+            onChangeText={(value) => handleInputChange('otherCondition', value)}
+            style={styles.inputOther}
+          />
 
-          {[
-            { key: 'dailyRoutine', label: 'โรคประจำตัว' },
-            { key: 'diet', label: 'การแพ้อาหาร' },
-            { key: 'exercise', label: 'ประวัติการผ่าตัด/กำลังผ่าตัด' },
-            { key: 'medication', label: 'ยาที่กำลังใช้อยู่' },
-          ].map(({ key, label }) => (
+          {[{ key: 'diet', label: 'การแพ้อาหาร' }, { key: 'exercise', label: 'ประวัติการผ่าตัด/กำลังผ่าตัด' }, { key: 'medication', label: 'ยาที่กำลังใช้อยู่' }].map(({ key, label }) => (
             <View key={key} style={styles.inputGroup}>
               <Text style={styles.label}>{label}</Text>
               <TextInput
@@ -92,19 +120,19 @@ const FormInput = ({ navigation }) => {
               <Text style={styles.buttonText}>Next</Text>
             </TouchableOpacity>
           </View>
-
-          {/*ลูกกลมๆตกแต่งพื้นหลัง*/}
-          <View style={styles.ellipse11}></View>
-          <View style={styles.ellipse12}></View>
-          <View style={styles.ellipse15}></View>
-          <View style={styles.ellipse13}></View>
-          <View style={styles.ellipse14}></View>
-          <View style={styles.ellipse16}></View>
         </View>
+          <View style={styles.line} />
+          <View style={styles.ellipse11} />
+          <View style={styles.ellipse12} />
+          <View style={styles.ellipse13} />
+          <View style={styles.ellipse14} />
+          <View style={styles.ellipse15} />
+          <View style={styles.ellipse16} />
       </View>
     </ScrollView>
   );
 };
+
 
 const styles = StyleSheet.create({
   container: {
@@ -126,9 +154,8 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
   },
   header: {
-    fontFamily: 'Itim',
+    fontFamily: 'Itim-Regular',
     fontSize: 36,
-    fontWeight: 'bold',
     textAlign: 'center',
     marginBottom: 20,
   },
@@ -144,8 +171,13 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   label: {
-    fontFamily: 'Itim',
-    fontSize: 18,
+    fontFamily: 'Itim-Regular',
+    fontSize: 24,
+    marginBottom: 5,
+  },
+  labelsmall: {
+    fontFamily: 'Itim-Regular',
+    fontSize: 20,
     marginBottom: 5,
   },
   smallInput: {
@@ -155,12 +187,14 @@ const styles = StyleSheet.create({
     padding: 10,
     fontSize: 16,
     width: '100%',
+    fontFamily: 'Itim-Regular',
     textAlign: 'center',
   },
   genderContainer: {
-    flexDirection: 'row',
-    justifyContent: 'center',
-    marginBottom: 20,
+    flexDirection: 'row', 
+    alignItems: 'center', 
+    justifyContent: 'space-around', 
+    marginBottom: 15,
   },
   genderOption: {
     flexDirection: 'row',
@@ -183,7 +217,45 @@ const styles = StyleSheet.create({
   genderText: {
     marginLeft: 5,
     fontSize: 16,
-    fontFamily: 'Itim',
+    fontFamily: 'Itim-Regular',
+  },
+  conditionContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    width: '100%',
+    marginBottom: 15,
+  },
+  conditionButton: {
+    borderWidth: 1,
+    borderRadius: 25,
+    padding: 10,
+    margin: 5,
+    backgroundColor: '#FFF',
+    marginHorizontal: 5,
+    alignItems: 'center',
+  },
+  conditionButtonSelected: {
+    backgroundColor: '#FDD406',
+  },
+  conditionText: {
+    fontSize: 16,
+    fontFamily: 'Itim-Regular',
+  },
+  labelLeft: {
+    alignSelf: 'flex-start',
+    textAlign: 'left',
+    width: '100%',
+  },  
+  inputOther: {
+    borderWidth: 1,
+    borderRadius: 25,
+    backgroundColor: '#FFFFFF',
+    padding: 10,
+    fontSize: 16,
+    width: '30%',
+    marginBottom: 15,
+    alignSelf: 'flex-start',
+    fontFamily: 'Itim-Regular',
   },
   inputGroup: {
     width: '100%',
@@ -196,11 +268,12 @@ const styles = StyleSheet.create({
     padding: 10,
     fontSize: 16,
     width: '100%',
+    fontFamily: 'Itim-Regular',
   },
   comment: {
     fontSize: 14,
     color: 'gray',
-    fontStyle: 'Itim',
+    fontFamily: 'Itim-Regular',
     marginTop: 5,
   },
   buttonContainer: {
@@ -224,7 +297,7 @@ const styles = StyleSheet.create({
   },
   buttonText: {
     fontSize: 18,
-    fontFamily: 'Itim',
+    fontFamily: 'Itim-Regular',
     color: '#000',
   },
   ellipse11: {
@@ -234,7 +307,10 @@ const styles = StyleSheet.create({
     left: 303,
     top: 803,
     backgroundColor: '#D1F8EF',
-    zIndex: -1,
+    flex: 'none',
+    order: 1,
+    flexGrow: 0,
+    zIndex: 1,
     borderRadius: 175 / 2,
   },
   ellipse12: {
@@ -244,7 +320,10 @@ const styles = StyleSheet.create({
     left: -93,
     top: 688,
     backgroundColor: '#578FCA',
-    zIndex: -1,
+    flex: 'none',
+    order: 2,
+    flexGrow: 0,
+    zIndex: 2,
     borderRadius: 175 / 2,
   },
   ellipse15: {
@@ -254,7 +333,10 @@ const styles = StyleSheet.create({
     left: -25,
     top: 355,
     backgroundColor: '#D1F8EF',
-    zIndex: -1,
+    flex: 'none',
+    order: 3,
+    flexGrow: 0,
+    zIndex: 3,
     borderRadius: 69 / 2,
   },
   ellipse13: {
@@ -264,7 +346,6 @@ const styles = StyleSheet.create({
     left: -93,
     top: -87,
     backgroundColor: '#578FCA',
-    zIndex: -1,
     borderRadius: 175 / 2,
   },
   ellipse14: {
@@ -274,7 +355,10 @@ const styles = StyleSheet.create({
     left: 365,
     top: 100,
     backgroundColor: '#578FCA',
-    zIndex: -1,
+    flex: 'none',
+    order: 5,
+    flexGrow: 0,
+    zIndex: 5,
     borderRadius: 175 / 2,
   },
   ellipse16: {
@@ -284,8 +368,24 @@ const styles = StyleSheet.create({
     left: 391,
     top: 488,
     backgroundColor: '#D1F8EF',
-    zIndex: -1,
+    flex: 'none',
+    order: 6,
+    flexGrow: 0,
+    zIndex: 6,
     borderRadius: 61 / 2,
+  },
+  line: {
+    position: 'absolute',
+    width: 265,
+    height: 0,
+    left: 82,
+    top: 105,
+    borderWidth: 1,
+    borderColor: '#000000',
+    flex: 'none',
+    order: 24,
+    flexGrow: 0,
+    zIndex: 24,
   },
 });
 
