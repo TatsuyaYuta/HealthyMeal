@@ -4,7 +4,7 @@ import * as Font from 'expo-font'; // นำเข้า expo-font
 {/*import FormInput from "./components/FormInput";*/}
 {/*import ProfileScreen from "./components/ProfileScreen";*/}
 {/*import ForgotPasswordScreen from "./components/ForgotPasswordScreen";*/}
-{/*import ForgotPasswordScreen from './components/CreateNewPassword';*/}
+{/*import CreateNewPassword from './components/CreateNewPassword';*/}
 import VerifyEmail from './components/VerifyEmail';
 
 const loadFonts = async () => {
@@ -42,6 +42,7 @@ export default function App() {
         {/*<ProfileScreen />*/}
         {/*<ForgotPasswordScreen/>*/}
         <VerifyEmail/>
+        {/*<CreateNewPassword/>*/}
     </SafeAreaView>
   );
 };

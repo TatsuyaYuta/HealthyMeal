@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import { useState, useRef } from 'react';
 import { View, Text, TextInput, TouchableOpacity, StyleSheet, Image } from 'react-native';
 
 const VerifyEmail = () => {
@@ -59,7 +59,6 @@ const VerifyEmail = () => {
         <Text style={styles.resendText}>Don’t receive the Code?</Text>
         <Text style={styles.resendLink}>RESEND Code</Text>
       </View>
-
 
       <TouchableOpacity style={styles.button} onPress={handleVerify}>
         <Text style={styles.buttonText}>Verify & Proceed</Text>
