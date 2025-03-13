@@ -3,7 +3,9 @@ import { ActivityIndicator, SafeAreaView} from 'react-native';
 import * as Font from 'expo-font'; // นำเข้า expo-font
 {/*import FormInput from "./components/FormInput";*/}
 {/*import ProfileScreen from "./components/ProfileScreen";*/}
-import ForgotPasswordScreen from "./components/ForgotPasswordScreen";
+{/*import ForgotPasswordScreen from "./components/ForgotPasswordScreen";*/}
+{/*import ForgotPasswordScreen from './components/CreateNewPassword';*/}
+import VerifyEmail from './components/VerifyEmail';
 
 const loadFonts = async () => {
   await Font.loadAsync({
@@ -38,7 +40,8 @@ export default function App() {
     <SafeAreaView>
         {/*<FormInput />*/}
         {/*<ProfileScreen />*/}
-        <ForgotPasswordScreen/>
+        {/*<ForgotPasswordScreen/>*/}
+        <VerifyEmail/>
     </SafeAreaView>
   );
 };
