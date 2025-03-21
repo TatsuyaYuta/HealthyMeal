@@ -9,6 +9,7 @@
     "web": "expo start --web"
   },
   "dependencies": {
+    "@expo-google-fonts/abeezee": "^0.2.3",
     "@react-native-community/checkbox": "^0.5.17",
     "expo": "~52.0.37",
     "expo-checkbox": "~4.0.1",
@@ -18,6 +19,7 @@
     "react": "18.3.1",
     "react-native": "0.76.7",
     "react-native-checkbox": "^2.0.0",
+    "react-native-snap-carousel": "^3.9.1",
     "react-native-svg": "^15.11.2",
     "react-native-vector-icons": "^10.2.0",
     "tailwind-rn": "^4.2.0"
