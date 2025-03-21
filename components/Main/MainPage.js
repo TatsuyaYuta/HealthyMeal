@@ -1,6 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { View, Text, TextInput, TouchableOpacity, Image, ScrollView, FlatList, StyleSheet, ImageBackground } from 'react-native';
-import { FontAwesome, Ionicons } from '@expo/vector-icons';
 import BottomNav from '../BottomNav';
 
 const categories = [
