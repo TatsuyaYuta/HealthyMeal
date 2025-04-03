@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { View, Text, TextInput, TouchableOpacity, Image, ScrollView, FlatList, StyleSheet, ImageBackground } from 'react-native';
-import BottomNav from '../BottomNav';
+import { View, Text, TouchableOpacity, Image, ScrollView, FlatList, StyleSheet, ImageBackground } from 'react-native';
+import BottomNav from '../NavBar/BottomNav';
+import TopBar from '../TopBar/TopBar';
 
 const categories = [
   { id: 1, name: 'Meal', image: require('../../assets/icons/Meal.png') },
@@ -37,27 +38,15 @@ const MainPage = () => {
       const nextIndex = (currentIndex + 1) % promoSlides.length;
       setCurrentIndex(nextIndex);
       scrollViewRef.current?.scrollTo({ x: nextIndex * 371.5, animated: true });
-    }, 10000); // เปลี่ยนสไลด์ทุก 10 วินาที
+    }, 10000);
 
     return () => clearInterval(interval);
   }, [currentIndex]);
 
   return (
     <View style={styles.container}>
-      <View style={styles.header}>
-      <Image source={require('../../assets/icons/Logo.png')} style={styles.logo} />
 
-        <View style={styles.searchContainer}>
-          <TextInput style={[styles.searchInput, { fontFamily: 'Kanit-Regular' }]} placeholder="Search" />
-          <View style={styles.searchIconContainer}>
-            <Image source={require('../../assets/icons/Search.png')}  style={styles.searchIcon} />
-          </View>
-        </View>
-
-        <TouchableOpacity style={styles.iconButton}>
-          <Image source={require('../../assets/icons/User.png')} style={styles.iconUser}/>
-        </TouchableOpacity>
-      </View>
+      <TopBar />
 
       <Text style={styles.welcomeText}>Welcome, Arunee</Text>
       <Text style={styles.subText}>What do you want to eat?</Text>
@@ -105,7 +94,7 @@ const MainPage = () => {
             showsHorizontalScrollIndicator={false}
             onMomentumScrollEnd={(event) => {
               const contentOffsetX = event.nativeEvent.contentOffset.x;
-              const index = Math.round(contentOffsetX / 361); // 361 คือ width ของ promoSlide
+              const index = Math.round(contentOffsetX / 361);
               setCurrentIndex(index);
             }}
           >
@@ -154,7 +143,6 @@ const MainPage = () => {
           )}
         />
 
-
       </ScrollView>
 
       <BottomNav />
@@ -168,63 +156,6 @@ const styles = StyleSheet.create({
     backgroundColor: '#FFC757',
     paddingTop: 30,
     minHeight: '100%',
-  },
-  header: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-  },
-  logo: {
-    width: 89,
-    height: 89,
-    alignSelf: 'flex-start',
-    marginLeft: 0,
-  },
-  searchContainer: {
-    flexDirection: 'row',
-    backgroundColor: '#FFF',
-    borderRadius: 20,
-    paddingHorizontal: 10,
-    alignItems: 'center',
-    width: 234,
-    height: 40,
-    marginLeft: -10,
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.25,
-    shadowRadius: 2,
-    elevation: 2,
-  },
-  searchInput: {
-    flex: 1,
-    fontSize: 13,
-  },
-  searchIcon: {
-    width: 17.28,
-    height: 18,
-    alignSelf: 'center',
-  },
-  searchIconContainer: {
-    backgroundColor: '#FD561F',
-    width: 36,
-    height: 36,
-    borderRadius: 36 / 2,
-    justifyContent: 'center',
-    marginRight: -7,
-  },
-  iconButton: {
-    width: 44,
-    height: 37,
-    backgroundColor: '#FFFFFF',
-    borderBottomLeftRadius: 15,
-    borderTopLeftRadius: 15,
-    justifyContent: 'center',
-    alignItems: 'center',
-    marginLeft: 8,
-  },
-  iconUser:{
-    width: 20,
-    height: 20,
   },
   welcomeText: {
     fontSize: 26,
@@ -420,7 +351,7 @@ const styles = StyleSheet.create({
     left: 10,
     flexDirection: 'row',
     alignItems: 'center',
-    backgroundColor: 'rgb(255, 255, 255)',
+    backgroundColor: '#fff',
     paddingHorizontal: 2,
     borderRadius: 15,
     width: 45,
