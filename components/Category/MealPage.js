@@ -42,7 +42,6 @@ const MealPage = () => {
             <CategoryList categories={categories} />
           </View>
           
-          {/* Sort By */}
           <View style={styles.sortByContainer}>
             <Text style={styles.sortByText}>Sort By</Text>
             <TouchableOpacity>
@@ -119,6 +118,7 @@ const styles = StyleSheet.create({
     fontFamily: 'Kanit-Regular',
     color: '#FF4500',
     marginRight: 'auto',
+    justifyContent: 'flex-end',
   },
   filterButton: {
     width: 32,
@@ -179,8 +179,9 @@ const styles = StyleSheet.create({
   },
   separator: {
     height: 1,
-    backgroundColor: '#F0F0F0',
+    backgroundColor: '#FD561F',
     marginHorizontal: 20,
+    marginBottom: 12,
   },
 });
 

@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, TouchableOpacity, Image, ScrollView, StyleSheet } from 'react-native';
+import { View, Text, TouchableOpacity, Image, ScrollView, StyleSheet, Animated } from 'react-native';
 import { useNavigation, useRoute } from '@react-navigation/native';
 
 const CategoryList = ({ categories }) => {
   const [selectedCategory, setSelectedCategory] = useState(null);
+  const [scaleAnim] = useState(new Animated.Value(1)); // การตั้งค่าขนาดเริ่มต้นของอนิเมชั่น
   const route = useRoute(); // ใช้ route เพื่อตรวจสอบหมวดหมู่ที่เลือก
   const navigation = useNavigation();
 
@@ -21,6 +22,13 @@ const CategoryList = ({ categories }) => {
     else if (categoryName === 'Dessert') navigation.navigate('DessertPage', { selectedCategory: 'Dessert' });
     else if (categoryName === 'Salad') navigation.navigate('SaladPage', { selectedCategory: 'Salad' });
     else if (categoryName === 'Drinks') navigation.navigate('DrinksPage', { selectedCategory: 'Drinks' });
+
+    // เริ่มอนิเมชั่นขยายเมื่อหมวดหมู่ถูกเลือก
+    Animated.spring(scaleAnim, {
+      toValue: 1.1, // ขยายขนาด
+      friction: 3, // ความต้านทาน
+      useNativeDriver: true,
+    }).start();
   };
 
   // ตรวจสอบว่ามี categories หรือไม่
@@ -41,10 +49,13 @@ const CategoryList = ({ categories }) => {
             style={[styles.category, index < categories.length - 1 && styles.categoryWithMargin]}
             onPress={() => handleCategoryPress(item.name)} // เมื่อเลือกหมวดหมู่
           >
-            <View
+            <Animated.View
               style={[
                 styles.categoryBackgroundImage,
                 item.name === selectedCategory && styles.activeCategoryBackground,
+                {
+                  transform: [{ scale: item.name === selectedCategory ? scaleAnim : 1 }], // การขยายขนาด
+                },
               ]}
             >
               <Image
@@ -52,11 +63,12 @@ const CategoryList = ({ categories }) => {
                 style={styles.categoryImage}
                 tintColor={item.name === selectedCategory ? '#FF4500' : '#000000'} // เปลี่ยนสีของ icon
               />
-            </View>
+            </Animated.View>
             <Text
               style={[
                 styles.categoryText,
                 item.name === selectedCategory && styles.activeCategoryText,
+                item.name === selectedCategory && styles.activeCategoryTextBold, // เปลี่ยนข้อความให้หนาเมื่อเลือก
               ]}
             >
               {item.name}
@@ -89,7 +101,10 @@ const styles = StyleSheet.create({
     color: '#000000', // สีของข้อความที่ไม่เลือก
   },
   activeCategoryText: {
-    color: '#FF4500', // สีของข้อความที่เลือก
+    color: '#FFF', // สีของข้อความที่เลือก
+  },
+  activeCategoryTextBold: {
+    fontWeight: 'bold', // ข้อความหนาเมื่อเลือก
   },
   categoryImage: {
     width: 39,
@@ -105,7 +120,9 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   activeCategoryBackground: {
-    backgroundColor: '#FFDFAF', // สีพื้นหลังของหมวดหมู่ที่เลือก
+    backgroundColor: '#FFFFFF', // เปลี่ยนพื้นหลังเป็นสีขาวเมื่อเลือก
+    borderWidth: 2,
+    borderColor: '#FF4500', // เพิ่มเส้นขอบสีส้ม
   },
 });
 
