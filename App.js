@@ -71,6 +71,15 @@ export default function App() {
         <Stack.Screen name="AppetizersPage" 
         component={AppetizersPage} 
         options={{ title: 'Appetizers', headerShown: false }} />
+        {/*<Stack.Screen name="Dessert" 
+        component={DessertPage} 
+        options={{ title: 'Dessert', headerShown: false }} />
+        <Stack.Screen name="Salad" 
+        component={SaladPage} 
+        options={{ title: 'Salad', headerShown: false }} />
+        <Stack.Screen name="Drinks" 
+        component={DrinksPage} 
+        options={{ title: 'Drinks', headerShown: false }} />*/}
       </Stack.Navigator>
     </NavigationContainer>
     //<MealPage />
