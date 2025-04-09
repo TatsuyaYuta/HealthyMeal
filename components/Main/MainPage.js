@@ -1,7 +1,8 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { View, Text, TouchableOpacity, Image, ScrollView, FlatList, StyleSheet, ImageBackground } from 'react-native';
 import BottomNav from '../NavBar/BottomNav';
-import TopBar from '../TopBar/TopBar';
+import TopBarTest from '../TopBar/TopBarTest';
+import CategoryList from '../Category/Main/CategoryList';
 
 const categories = [
   { id: 1, name: 'Meal', image: require('../../assets/icons/Meal.png') },
@@ -46,22 +47,15 @@ const MainPage = () => {
   return (
     <View style={styles.container}>
 
-      <TopBar />
+      <TopBarTest />
 
       <Text style={styles.welcomeText}>Welcome, Arunee</Text>
       <Text style={styles.subText}>What do you want to eat?</Text>
 
       <ScrollView contentContainerStyle={styles.mainContent}>
-        <View style={styles.categoryContainer}>
-          {categories.map((item) => (
-            <View key={item.id} style={styles.category}>
-              <View style={styles.categoryBackgroundImage}>
-                <Image source={item.image} style={styles.categoryImage} />
-              </View>
-              <Text style={styles.categoryText}>{item.name}</Text>
-            </View>
-          ))}
-        </View>
+
+      <CategoryList categories={categories} />
+      
 
         <View style={styles.line} />
 

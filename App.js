@@ -1,12 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { ActivityIndicator, SafeAreaView} from 'react-native';
 import * as Font from 'expo-font'; // นำเข้า expo-font
-{/*import FormInput from "./components/FormInput";*/}
-{/*import ProfileScreen from "./components/ProfileScreen";*/}
-{/*import ForgotPasswordScreen from "./components/ForgotPasswordScreen";*/}
-{/*import CreateNewPassword from './components/CreateNewPassword';*/}
-{/*import VerifyEmail from './components/VerifyEmail';*/}
 import MainPage from './components/Main/MainPage';
+import { NavigationContainer } from '@react-navigation/native';
+import { createStackNavigator } from '@react-navigation/stack';
+import MealPage from './components/Category/MealPage';
+import AppetizersPage from './components/Category/AppetizersPage';
+
+const Stack = createStackNavigator();
 
 const loadFonts = async () => {
   await Font.loadAsync({
@@ -57,13 +58,22 @@ export default function App() {
   }
 
   return (
-    <SafeAreaView>
-        {/*<FormInput />*/}
-        {/*<ProfileScreen />*/}
-        {/*<ForgotPasswordScreen/>*/}
-        {/*<VerifyEmail/>*/}
-        {/*<CreateNewPassword/>*/}
-        <MainPage />
-    </SafeAreaView>
+    <NavigationContainer>
+      <Stack.Navigator initialRouteName="MainPage">
+        <Stack.Screen 
+          name="MainPage" 
+          component={MainPage} 
+          options={{ headerShown: false }} />
+        <Stack.Screen 
+          name="MealPage" 
+          component={MealPage} 
+          options={{ title: 'Meal', headerShown: false }} />
+        <Stack.Screen name="AppetizersPage" 
+        component={AppetizersPage} 
+        options={{ title: 'Appetizers', headerShown: false }} />
+      </Stack.Navigator>
+    </NavigationContainer>
+    //<MealPage />
+    //<MainPage />
   );
 };
