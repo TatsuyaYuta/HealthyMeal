@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { View, Text, Image, StyleSheet, TouchableOpacity, ScrollView } from 'react-native';
-import { Ionicons, AntDesign } from '@expo/vector-icons'; // ต้องติดตั้ง vector-icons
+import { Ionicons, AntDesign } from '@expo/vector-icons'; 
 import BottomNav from '../../NavBar/BottomNav';
 
 const MealDetailPage = ({ route, navigation }) => {
@@ -13,13 +13,12 @@ const MealDetailPage = ({ route, navigation }) => {
     { name: 'ไข่ต้ม', price: 10 },
   ];
 
-  // ใช้ useState ในการเก็บสถานะของการเลือก checkbox
   const [checkedToppings, setCheckedToppings] = useState({});
 
   const handleCheckboxToggle = (name) => {
     setCheckedToppings((prev) => ({
       ...prev,
-      [name]: !prev[name],  // เปลี่ยนสถานะการเลือกของ topping
+      [name]: !prev[name], 
     }));
   };
 

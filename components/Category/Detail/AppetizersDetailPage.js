@@ -239,7 +239,7 @@ const styles = StyleSheet.create({
   toppingPrice: {
     fontSize: 16,
     color: '#333333',
-    marginRight: 10, // เพิ่ม margin ให้ระหว่างราคาและ checkbox
+    marginRight: 10,
   },
   toppingCheckbox: {
     width: 20,
@@ -251,7 +251,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   checkedCheckbox: {
-    backgroundColor: '#FF5F1F', // สีเมื่อ checkbox ถูกเลือก
+    backgroundColor: '#FF5F1F',
   },
   buttonCart: {
     alignItems: 'center',
