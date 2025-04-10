@@ -6,6 +6,8 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import MealPage from './components/Category/MealPage';
 import AppetizersPage from './components/Category/AppetizersPage';
+import MealDetailPage from './components/Category/Detail/MealDetailPage';
+import AppetizersDetailPage from './components/Category/Detail/AppetizersDetailPage';
 
 const Stack = createStackNavigator();
 
@@ -68,9 +70,17 @@ export default function App() {
           name="MealPage" 
           component={MealPage} 
           options={{ title: 'Meal', headerShown: false }} />
+        <Stack.Screen 
+          name="MealDetail"
+          component={MealDetailPage}
+          options={{title: 'ชื่อเมนู',headerShown: false }}/>
         <Stack.Screen name="AppetizersPage" 
-        component={AppetizersPage} 
-        options={{ title: 'Appetizers', headerShown: false }} />
+          component={AppetizersPage} 
+          options={{ title: 'Appetizers', headerShown: false }} />
+        <Stack.Screen 
+          name="AppetizersDetail"
+          component={AppetizersDetailPage}
+          options={{title: 'ชื่อเมนู',headerShown: false }}/>
         {/*<Stack.Screen name="Dessert" 
         component={DessertPage} 
         options={{ title: 'Dessert', headerShown: false }} />
