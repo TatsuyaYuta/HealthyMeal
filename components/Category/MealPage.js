@@ -72,9 +72,9 @@ const MealPage = () => {
                 </View>
                 <Text style={styles.mealPrice}>{item.price}</Text>
                 </View>
+                <View style={styles.line} />
             </TouchableOpacity>
             ))}
-
         </View>
       </ScrollView>
       
@@ -186,6 +186,13 @@ const styles = StyleSheet.create({
     backgroundColor: '#FD561F',
     marginHorizontal: 20,
     marginBottom: 12,
+  },
+  line: {
+    width: 376,
+    height: 0,
+    borderWidth: 0.5,
+    borderColor: '#FD561F',
+    alignSelf: 'center',
   },
 });
 

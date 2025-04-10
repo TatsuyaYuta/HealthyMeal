@@ -58,7 +58,7 @@ const AppetizersDetailPage = ({ route, navigation }) => {
             </TouchableOpacity>
           </View>
         </View>
-        <View style={styles.separator} />
+        <View style={styles.line} />
 
         <Text style={styles.sectionTitle}>รายละเอียดอาหาร</Text>
         <Text style={styles.sectionTitleTop}>Toppings</Text>
@@ -208,7 +208,7 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontFamily: 'Kanit-Light',
     marginLeft: 24,
-    marginTop: 5,
+    marginTop: 10,
     marginBottom: 8,
     color: '#000000',
   },
@@ -277,6 +277,13 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     fontSize: 16,
     marginLeft: 8,
+  },
+  line: {
+    width: 376,
+    height: 0,
+    borderWidth: 0.5,
+    borderColor: '#FD561F',
+    alignSelf: 'center',
   },
 });
 

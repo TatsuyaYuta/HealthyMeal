@@ -71,11 +71,11 @@ const AppetizersPage = () => {
                 </View>
                 <Text style={styles.appetizersPrice}>{item.price}</Text>
                 </View>
+                <View style={styles.line}/>
             </TouchableOpacity>
             ))}
         </View>
       </ScrollView>
-      
       <BottomNav />
     </View>
   );
@@ -179,11 +179,12 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontFamily: 'Kanit-Medium',
   },
-  separator: {
-    height: 1,
-    backgroundColor: '#FD561F',
-    marginHorizontal: 20,
-    marginBottom: 12,
+  line: {
+    width: 376,
+    height: 0,
+    borderWidth: 0.5,
+    borderColor: '#FD561F',
+    alignSelf: 'center',
   },
 });
 
