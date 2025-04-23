@@ -1,9 +1,12 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { View, Text, Image, StyleSheet, TouchableOpacity, ScrollView } from 'react-native';
 import TopBarTest from '../TopBar/TopBarTest';
 import BottomNav from '../NavBar/BottomNav';
 import CategoryList from './Main/CategoryList';
 import { useNavigation } from '@react-navigation/native';
+
+import config from "../../backend/config/config";
+const { API_BASE_URL } = config;
 
 const categories = [
   { id: 1, name: 'Meal', image: require('../../assets/icons/Meal.png') },
@@ -13,44 +16,38 @@ const categories = [
   { id: 5, name: 'Drinks', image: require('../../assets/icons/Drinks.png') },
 ];
 
-const appetizers = [
-  {
-    id: '1',
-    name: 'แซลม่อนโทส',
-    rating: 4.8,
-    price: '115 ฿',
-    image: 'https://img.wongnai.com/p/1920x0/2017/10/02/5278920fee9a40329d0988d9938535ec.jpg',
-  },
-  {
-    id: '2',
-    name: 'อกไก่ยำแจ่ว',
-    rating: 4.3,
-    price: '85 ฿',
-    image: 'https://t3.ftcdn.net/jpg/03/15/22/02/360_F_315220207_lGC14p4nkMuWC1sDIegjrYblbbpIcKKE.jpg',
-  },
-];
-
 const AppetizersPage = () => {
+  const [appetizers, setAppetizers] = useState([]);
+  const navigation = useNavigation();
 
-    const navigation = useNavigation();
+  useEffect(() => {
+    const fetchAppetizers = async () => {
+      try {
+        const res = await fetch(`${API_BASE_URL}/api/categories/1`);
+        const data = await res.json();
+        setAppetizers(data.menus);
+      } catch (error) {
+        console.error("Error fetching appetizers:", error);
+      }
+    };
+
+    fetchAppetizers();
+  }, []);
 
   return (
     <View style={styles.container}>
       <TopBarTest />
-      
       <ScrollView style={styles.scrollView}>
-
         <View style={styles.mainContent}>
           <View style={styles.categoryListContent}>
             <CategoryList categories={categories} />
           </View>
-          
+
           <View style={styles.sortByContainer}>
             <Text style={styles.sortByText}>Sort By</Text>
             <TouchableOpacity>
               <Text style={styles.sortByOption}>Popular</Text>
             </TouchableOpacity>
-            
             <TouchableOpacity style={styles.filterButton}>
               <Image source={require('../../assets/icons/Filter.png')} style={styles.filterIcon} />
             </TouchableOpacity>
@@ -58,22 +55,22 @@ const AppetizersPage = () => {
 
           {appetizers.map((item) => (
             <TouchableOpacity
-                key={item.id}
-                onPress={() => navigation.navigate('AppetizersDetail', { appetizers: item })}
-                style={styles.appetizersCard}
+              key={item.id}
+              onPress={() => navigation.navigate('AppetizersDetail', { appetizers: item })}
+              style={styles.appetizersCard}
             >
-                <Image source={{ uri: item.image }} style={styles.appetizersImage} />
-                <View style={styles.appetizersDetails}>
+              <Image source={{ uri: item.image }} style={styles.appetizersImage} />
+              <View style={styles.appetizersDetails}>
                 <Text style={styles.appetizersName}>{item.name}</Text>
                 <View style={styles.ratingContainer}>
-                    <Text style={styles.ratingValue}>{item.rating}</Text>
-                    <Image source={require('../../assets/icons/Star.png')} style={styles.starIcon} />
+                  <Text style={styles.ratingValue}>4.5</Text>
+                  <Image source={require('../../assets/icons/Star.png')} style={styles.starIcon} />
                 </View>
-                <Text style={styles.appetizersPrice}>{item.price}</Text>
-                </View>
-                <View style={styles.line}/>
+                <Text style={styles.appetizersPrice}>{item.price} ฿</Text>
+              </View>
+              <View style={styles.line} />
             </TouchableOpacity>
-            ))}
+          ))}
         </View>
       </ScrollView>
       <BottomNav />

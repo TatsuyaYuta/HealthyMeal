@@ -28,6 +28,9 @@ const promoSlides = [
 const recommend = [
   { id: 1, image: 'https://files.vogue.co.th/uploads/healthy-food-7.jpg', price: '60 ฿' },
   { id: 2, image: 'https://www.krungsricard.com/KrungsriCreditCard/media/html/5-salad-chicken.jpg', price: '60 ฿' },
+  { id: 3, image: 'https://www.krungsricard.com/KrungsriCreditCard/media/html/5-salad-chicken.jpg', price: '60 ฿' },
+  { id: 4, image: 'https://www.krungsricard.com/KrungsriCreditCard/media/html/5-salad-chicken.jpg', price: '60 ฿' },
+  { id: 5, image: 'https://www.krungsricard.com/KrungsriCreditCard/media/html/5-salad-chicken.jpg', price: '60 ฿' },
 ];
 
 const MainPage = () => {
@@ -56,7 +59,6 @@ const MainPage = () => {
 
       <CategoryList categories={categories} />
       
-
         <View style={styles.line} />
 
         <View style={styles.sectionHeader}>

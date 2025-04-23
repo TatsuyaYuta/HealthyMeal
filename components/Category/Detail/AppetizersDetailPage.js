@@ -13,13 +13,12 @@ const AppetizersDetailPage = ({ route, navigation }) => {
     { name: 'ไข่ต้ม', price: 10 },
   ];
 
-  // ใช้ useState ในการเก็บสถานะของการเลือก checkbox
   const [checkedToppings, setCheckedToppings] = useState({});
 
   const handleCheckboxToggle = (name) => {
     setCheckedToppings((prev) => ({
       ...prev,
-      [name]: !prev[name],  // เปลี่ยนสถานะการเลือกของ topping
+      [name]: !prev[name], 
     }));
   };
 
