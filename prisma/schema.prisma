@@ -1,0 +1,140 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider  = "mysql"
+  url       = env("DATABASE_URL")
+}
+
+model User {
+  id               Int              @id @default(autoincrement())
+  email            String           @unique
+  password         String
+  name             String?
+  picture          String?
+  role             String           @default("user") // user, admin
+  weight           Float?
+  height           Float?
+  age              Int?
+  gender           String?          // male, female, other
+  healthConditions HealthCondition[] // โรคที่ผู้ใช้มี
+  cartItems        Cart[]           // สินค้าในตะกร้า
+  orders           Order[]          // รายการสั่งซื้อ
+  createdAt        DateTime         @default(now())
+  updatedAt        DateTime         @updatedAt
+}
+
+model Restaurant {
+  id          Int       @id @default(autoincrement())
+  name        String
+  description String?
+  address     String
+  phone       String?
+  website   String  @db.VarChar(1000) // จำกัดความยาวแค่ 100 ตัวอักษร
+  menus       Menu[]
+  bestSellers BestSellerMenu[]
+  recommended RecommendedMenu[]
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model Menu {
+  id          Int       @id @default(autoincrement())
+  name        String
+  description String?
+  price       Float
+  image       String?   // รูปภาพของเมนู
+  restaurant  Restaurant @relation(fields: [restaurantId], references: [id])
+  restaurantId Int
+  nutrition   Nutrition?
+  suitableFor HealthCondition[] // อาหารที่เหมาะกับโรคอะไรบ้าง
+  category    Category @relation(fields: [categoryId], references: [id])
+  categoryId  Int
+  bestSellers BestSellerMenu[]
+  recommended RecommendedMenu[]
+  cartItems   Cart[]
+  orderItems  OrderItem[]
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model BestSellerMenu {
+  id           Int       @id @default(autoincrement())
+  restaurant   Restaurant @relation(fields: [restaurantId], references: [id])
+  restaurantId Int
+  menu         Menu       @relation(fields: [menuId], references: [id])
+  menuId       Int
+  createdAt    DateTime   @default(now())
+}
+
+model RecommendedMenu {
+  id           Int       @id @default(autoincrement())
+  restaurant   Restaurant @relation(fields: [restaurantId], references: [id])
+  restaurantId Int
+  menu         Menu       @relation(fields: [menuId], references: [id])
+  menuId       Int
+  createdAt    DateTime   @default(now())
+}
+
+model Nutrition {
+  id          Int     @id @default(autoincrement())
+  calories    Float
+  carbs       Float
+  protein     Float
+  fat         Float
+  fiber       Float
+  sugar       Float
+  sodium      Float
+  cholesterol Float
+  menu        Menu    @relation(fields: [menuId], references: [id])
+  menuId      Int     @unique // One-to-One relationship
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model HealthCondition {
+  id       Int     @id @default(autoincrement())
+  name     String  @unique // เช่น "Diabetes", "Hypertension"
+  users    User[]  // ผู้ใช้ที่มีเงื่อนไขสุขภาพนี้
+  menus    Menu[]  // อาหารที่เหมาะสมกับโรคนี้
+}
+
+
+model Category {
+  id   Int    @id @default(autoincrement())
+  name String @unique // เช่น "Meal", "Appetizers", "Dessert", "Salad", "Drinks"
+  menus Menu[]
+}
+
+model Cart {
+  id        Int  @id @default(autoincrement())
+  user      User @relation(fields: [userId], references: [id])
+  userId    Int
+  menu      Menu @relation(fields: [menuId], references: [id])
+  menuId    Int
+  quantity  Int  @default(1)
+  createdAt DateTime @default(now())
+}
+
+model Order {
+  id        Int       @id @default(autoincrement())
+  user      User      @relation(fields: [userId], references: [id])
+  userId    Int
+  totalPrice Float
+  status    String    @default("pending") // pending, completed, cancelled
+  items     OrderItem[]
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model OrderItem {
+  id        Int  @id @default(autoincrement())
+  order     Order @relation(fields: [orderId], references: [id])
+  orderId   Int
+  menu      Menu @relation(fields: [menuId], references: [id])
+  menuId    Int
+  quantity  Int
+  price     Float // ราคาต่อชิ้น
+  createdAt DateTime @default(now())
+}
